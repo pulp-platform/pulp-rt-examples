@@ -1,0 +1,16 @@
+Instructions for executing coremark on pulp
+-------------------------------------------
+
+First donwload coremark sources. You can get information here to get them: https://www.eembc.org/coremark/download.php
+
+Put the tar file in this folder, it should be named coremark_v1.0.tgz. If it has a different name either modify the makefile or rename the file.
+
+Then execute:
+
+  $ make patch
+
+This should untar the file and patch it with modifications needed for Pulp.
+
+You can finally go to coremark_v1.0 and execute:
+
+make -f Makefile.pulp all run
