@@ -31,5 +31,7 @@ int main()
   // we are blocked on this call until the whole buffer is sent
   rt_uart_write(uart, tx_buffer, BUFFER_SIZE, NULL);
 
+  rt_uart_close(uart, NULL);
+
   return 0;
 }
