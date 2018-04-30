@@ -1,0 +1,8 @@
+all: hwme_x86
+
+hwme_x86:
+	gcc -std=c99 hwme_x86.c -o hwme_x86
+
+clean:
+	rm -rf *.o
+	rm -rf hwme_x86
