@@ -121,8 +121,8 @@ int main()
   }
 
   // Now open the bridge framebuffer so that we can flush images to it (through JTAG)
-  fb = rt_bridge_fb_open(WIDTH, HEIGHT, RT_FB_FORMAT_GRAY, NULL);
-  printf("Got framebuffer %x\n", fb);
+  fb = rt_bridge_fb_open("Camera", WIDTH, HEIGHT, RT_FB_FORMAT_GRAY, NULL);
+  if (fb == 0) return -1;
 
   // We'll need one event per buffer
   if (rt_event_alloc(NULL, 3)) return -1;

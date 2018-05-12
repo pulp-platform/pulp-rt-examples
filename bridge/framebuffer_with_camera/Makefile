@@ -4,5 +4,6 @@ PULP_CFLAGS = -O3 -g #-DFPGA
 
 # This tells the platform to activate what is needed to connect the debug bridge
 bridge=1
+override PULP_TEMPLATE_ARGS += camera(cpi0)
 
 include $(PULP_SDK_HOME)/install/rules/pulp_rt.mk
