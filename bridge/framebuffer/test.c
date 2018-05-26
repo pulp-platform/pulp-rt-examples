@@ -26,7 +26,7 @@ int main()
   printf("Connection done\n");
 
   // Now open the bridge framebuffer so that we can flush images to it (through JTAG)
-  uint64_t fb = rt_bridge_fb_open(WIDTH, HEIGHT, RT_FB_FORMAT_GRAY, NULL);
+  uint64_t fb = rt_bridge_fb_open("fb", WIDTH, HEIGHT, RT_FB_FORMAT_GRAY, NULL);
   printf("Got framebuffer %x\n", fb);
 
   // Set all buffer to black
