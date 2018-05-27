@@ -6,7 +6,11 @@
 #include <rt/rt_api.h>
 #include <stdint.h>
 
+#if PULP_CHIP == CHIP_GAP
+#define GPIO 0
+#else
 #define GPIO 20
+#endif
 
 int main()
 {
@@ -19,11 +23,11 @@ int main()
   // Now set several values
   rt_gpio_set_pin_value(0, GPIO, 1);
 
-  rt_time_wait_us(20);
+  rt_time_wait_us(200);
 
   rt_gpio_set_pin_value(0, GPIO, 0);
 
-  rt_time_wait_us(20);
+  rt_time_wait_us(200);
 
   rt_gpio_set_pin_value(0, GPIO, 1);
 

@@ -90,9 +90,6 @@ static void cluster_entry()
   }
 
 
-  // First try the one-shot mode
-  printf("One shot performance counting\n");
-
   // To be compatible with all platforms, we can count only 1 event at the
   // same time (the silicon as only 1 HW counter), but the total number of cyles
   // is reported by a timer, we can activate it at the same time.

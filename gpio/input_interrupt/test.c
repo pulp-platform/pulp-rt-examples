@@ -7,7 +7,12 @@
 #include <rt/rt_api.h>
 #include <stdint.h>
 
+#if PULP_CHIP == CHIP_GAP
+#define GPIO 0
+#else
 #define GPIO 20
+#endif
+
 #define NB_EDGE 100
 
 static int edges = 0;
