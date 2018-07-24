@@ -9,6 +9,7 @@
 
 
 #include "rt/rt_api.h"
+#include "rt/data/rt_data_camera.h"
 
 // This strange resolution comes from the himax camera
 #define WIDTH     324
@@ -132,6 +133,9 @@ int main()
   rt_camera_conf_init(&cam_conf);
   camera = rt_camera_open("camera", &cam_conf, 0);
   if (camera == NULL) return -1;
+
+  rt_cam_control(camera, CMD_INIT, 0);
+  //rt_time_wait_us(1000000); //Wait camera calibration
 
   // Start it
   rt_cam_control(camera, CMD_START, 0);
