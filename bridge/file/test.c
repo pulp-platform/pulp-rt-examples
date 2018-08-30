@@ -24,9 +24,6 @@ char buffer[8192];
 
 int main()
 {
-
-  printf("%x\n", *(int *)0x1c008090);
-
   printf("Connecting to bridge\n");
   rt_bridge_connect(NULL);
   printf("Connection done\n");
