@@ -1,0 +1,8 @@
+{
+  "devices": {
+    "microphone": {
+      "type": "i2s_microphone",
+      "interface": "i2s0"
+    }
+  }
+}
