@@ -100,7 +100,7 @@ int main()
 
   // First wait until the external bridge is connected to the platform
   printf("Connecting to bridge\n");
-  rt_bridge_connect(NULL);
+  rt_bridge_connect(1, NULL);
   printf("Connection done\n");
 
   // Allocate 3 buffers, there will be 2 for the camera double-buffering and one
@@ -128,10 +128,14 @@ int main()
   // We'll need one event per buffer
   if (rt_event_alloc(NULL, 3)) return -1;
 
-  // Open the camera
+  // Configure Himax camera on interface 0
   rt_cam_conf_t cam_conf;
   rt_camera_conf_init(&cam_conf);
-  camera = rt_camera_open("camera", &cam_conf, 0);
+  cam_conf.id = 0;
+  cam_conf.type = RT_CAM_TYPE_HIMAX;
+
+  // Open the camera
+  camera = rt_camera_open(NULL, &cam_conf, 0);
   if (camera == NULL) return -1;
 
   rt_cam_control(camera, CMD_INIT, 0);
