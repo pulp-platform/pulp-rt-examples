@@ -132,6 +132,7 @@ int main()
   rt_cam_conf_t cam_conf;
   rt_camera_conf_init(&cam_conf);
   cam_conf.id = 0;
+  cam_conf.control_id = 1;
   cam_conf.type = RT_CAM_TYPE_HIMAX;
 
   // Open the camera
