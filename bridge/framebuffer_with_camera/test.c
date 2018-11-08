@@ -15,6 +15,12 @@
 #define WIDTH     324
 #define HEIGHT    244
 
+#ifdef USE_RAW
+#define FB_FORMAT RT_FB_FORMAT_RAW
+#else
+#define FB_FORMAT RT_FB_FORMAT_GRAY
+#endif
+
 // The following structure is used to describe an image
 typedef struct buffer_s buffer_t;
 
@@ -122,7 +128,7 @@ int main()
   }
 
   // Now open the bridge framebuffer so that we can flush images to it (through JTAG)
-  fb = rt_bridge_fb_open("Camera", WIDTH, HEIGHT, RT_FB_FORMAT_GRAY, NULL);
+  fb = rt_bridge_fb_open("Camera", WIDTH, HEIGHT, FB_FORMAT, NULL);
   if (fb == 0) return -1;
 
   // We'll need one event per buffer
