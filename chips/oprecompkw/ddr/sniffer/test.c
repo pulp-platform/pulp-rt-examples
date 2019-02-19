@@ -38,44 +38,11 @@
 #include <stdio.h>
 
 #include "rt/rt_api.h"
+#include "../common/utils.h"
 
 /* 1024 elements of 4 bytes */
 #define BUFF_SIZE 1024
 static RT_L1_DATA uint32_t buff[BUFF_SIZE];
-
-#define DEBUG_BUFF_DUMP
-#ifdef DEBUG_BUFF_DUMP
-static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_split)
-{
-  size_t i;
-
-  if (msg != NULL) {
-    printf("%s\n", msg);
-  }
-
-  for (i = 0; i < data_len; i++) {
-    if (i % 32 == 0) {
-      if (i != 0) {
-        puts("");
-      }
-      printf("%04x-%04x: ", i, i + 32);
-    }
-    if (byte_split) {
-      printf("%02x ", data[i]);
-    } else {
-      printf("%02x", data[i]);
-      if ((i + 1) % 4 == 0) {
-        printf(" ");
-      }
-    }
-  }
-  puts("");
-}
-#else
-static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_split)
-{
-}
-#endif /* DEBUG_BUFF_DUMP */
 
 int main()
 {
@@ -90,7 +57,7 @@ int main()
   const uint32_t spy_limit = (1 << 28);
   unsigned short s = (unsigned short)sizeof(buff);
 
-  printf("Greetings from ddr_sniffer_dma!\n");
+  printf("Greetings from ddr sniffer!\n");
   printf("Running on cluster %d, core %d\n", rt_cluster_id(), rt_core_id());
 
   // All RISCV cores of a cluster can generate requests to the DMA engine.
