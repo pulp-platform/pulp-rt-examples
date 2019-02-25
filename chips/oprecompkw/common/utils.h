@@ -24,6 +24,8 @@
 
 #include <stdio.h>
 
+#define DDR_SNIFFER_MAX_PATTERN_SIZE  64
+
 #define DEBUG_BUFF_DUMP
 #ifdef DEBUG_BUFF_DUMP
 static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_split)
@@ -39,7 +41,7 @@ static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_
       if (i != 0) {
         puts("");
       }
-      printf("%04x-%04x: ", i, i + 32);
+      printf("%04x-%04x: ", (unsigned int)i, (unsigned int)i + 32);
     }
     if (byte_split) {
       printf("%02x ", data[i]);
@@ -57,5 +59,18 @@ static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_
 {
 }
 #endif /* DEBUG_BUFF_DUMP */
+
+// Convert a pointer in host memory space to a PULP address that will be routed
+// to the host.
+// Notes:
+// - This function was considered useful, copied and adapted from another
+//   example to this file.
+// - Original function: host2local(uint64_t host)
+// - Original author: Fabian Schuiki <fschuiki@iis.ee.ethz.ch>
+static inline uint64_t htop(uint64_t hostaddr)
+{
+  return (hostaddr & (((uint64_t)1 << 48) - 1)) | ((uint64_t)1 << 48);
+}
+
 #endif /* __UTILS_H_INCLUDED__ */
 

@@ -23,16 +23,14 @@
  * In this example a RISCV core writes a pattern (alternating 0xbebacafe,
  * 0xdeadbeef) into the external memory and then reads it back. For that
  * requests with size 4 KiB are made to the DMA engine.
- *
- * Suggestion on how to execute this test:
- * $ make conf CONFIG_OPT="gvsoc/trace=ddr gvsoc/trace=dma" && make all run 2>&1 | tee output.log
  */
 
 
 #include <stdio.h>
 
 #include "rt/rt_api.h"
-#include "../common/utils.h"
+
+#include "utils.h"
 
 /* 1024 elements of 4 bytes */
 #define BUFF_SIZE 1024
