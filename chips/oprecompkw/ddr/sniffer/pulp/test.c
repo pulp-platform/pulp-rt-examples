@@ -61,15 +61,6 @@ static inline void wed_dump(st_wed *wed)
   printf("}\n");
 }
 
-static inline size_t mystrlen(const char *str)
-{
-  size_t cnt = 0;
-  while (str[cnt] != '\0') {
-    cnt++;
-  }
-  return cnt;
-}
-
 // All RISC-V cores of a cluster can generate requests to the DMA engine.
 // The DMA engine is connected to the cluster bus (AXI) within the PULP
 // cluster.
@@ -121,7 +112,7 @@ int main(uint64_t wedptr)
     // Update address to the next spying point
     address += wed.spy_shift;
     // Compare pattern
-    if (strncmp(mstr, (char *)(buff), mystrlen(mstr)) == 0) {
+    if (strncmp(mstr, (char *)(buff), bare_strlen(mstr)) == 0) {
       match = 1;
       goto found;
     }

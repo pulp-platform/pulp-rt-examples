@@ -72,5 +72,18 @@ static inline uint64_t htop(uint64_t hostaddr)
   return (hostaddr & (((uint64_t)1 << 48) - 1)) | ((uint64_t)1 << 48);
 }
 
+// Returns the length (number of bytes) of the string str, excluding the
+// terminating null byte ('\0').
+// Notes:
+// - This is a very simple/modest/nonoptimized implementation of strlen(3).
+static inline size_t bare_strlen(const char *str)
+{
+  size_t cnt = 0;
+  while (str[cnt] != '\0') {
+    cnt++;
+  }
+  return cnt;
+}
+
 #endif /* __UTILS_H_INCLUDED__ */
 
