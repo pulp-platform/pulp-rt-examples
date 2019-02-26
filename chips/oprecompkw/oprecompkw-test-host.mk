@@ -18,5 +18,27 @@
 # Author: Éder F. Zulian, TUK (zulian@eit.uni-kl.de)
 #
 
-include ../../oprecompkw-test.mk
+TOPDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+CFLAGS += -O3 -g -Wall -Wextra
+CFLAGS += -I$(PULP_SDK_HOME)/install/ws/include
+CFLAGS += -I$(TOPDIR)common
+LDFLAGS = -L$(PULP_SDK_HOME)/install/ws/lib
+LDFLAGS += -loprecomp -lcxl -lpulpvplauncher
+LDFLAGS += -lpthread
+
+target = test
+builddir = build
+
+$(target): $(builddir) $(target).c
+	$(CC) $(CFLAGS) -o $(builddir)/$@ $@.c $(LDFLAGS)
+
+$(builddir):
+	mkdir -p $(builddir)
+
+all: $(target)
+
+.PHONY: clean
+
+clean:
+	rm -rf $(builddir)

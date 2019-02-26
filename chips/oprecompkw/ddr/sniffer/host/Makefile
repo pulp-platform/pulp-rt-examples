@@ -18,5 +18,5 @@
 # Author: Éder F. Zulian, TUK (zulian@eit.uni-kl.de)
 #
 
-include ../../oprecompkw-test.mk
+include ../../../oprecompkw-test-host.mk
 

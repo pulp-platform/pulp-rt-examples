@@ -20,25 +20,22 @@
  */
 
 /*
- * This example shows how a RISCV core can use the DMA engine from within a
- * PULP cluster to access an external memory (e.g., DDRx-SDRAM, with
- * x=3,4,...) via the SoC interconnect through the DDRx-SDRAM memory
- * controller.
+ * This example shows how a RISC-V core can use the DMA engine from within a
+ * PULP cluster to access an external memory (e.g., DDRx-SDRAM, with via the
+ * SoC interconnect through the DDRx-SDRAM memory controller.
  *
- * In this example the RISCV core generates multiple read requests to the DMA
+ * In this example the RISC-V core generates multiple read requests to the DMA
  * engine with size 4 KiB. The first request addresses the external memory
  * base address, then the address is incremented by 1MiB each time until it
  * reaches 256MiB from the base. The collected data is formatted and dumped to
  * the standard output.
- *
- * Suggestion on how to execute this test:
- * $ make conf CONFIG_OPT="gvsoc/trace=ddr gvsoc/trace=dma" && make all run 2>&1 | tee output.log
  */
 
 #include <stdio.h>
 
 #include "rt/rt_api.h"
-#include "../common/utils.h"
+
+#include "utils.h"
 
 /* 1024 elements of 4 bytes */
 #define BUFF_SIZE 1024
@@ -60,7 +57,7 @@ int main()
   printf("Greetings from ddr sniffer!\n");
   printf("Running on cluster %d, core %d\n", rt_cluster_id(), rt_core_id());
 
-  // All RISCV cores of a cluster can generate requests to the DMA engine.
+  // All RISC-V cores of a cluster can generate requests to the DMA engine.
   // The DMA engine is connected to the cluster bus (AXI) within the PULP
   // cluster.
   // Each of the PULP cluster has its cluster bus connected to the SoC

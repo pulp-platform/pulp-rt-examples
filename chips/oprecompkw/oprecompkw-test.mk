@@ -18,5 +18,15 @@
 # Author: Éder F. Zulian, TUK (zulian@eit.uni-kl.de)
 #
 
-include ../../oprecompkw-test.mk
+all:
+	$(MAKE) -C pulp clean conf build
+	$(MAKE) -C host clean all
 
+run: all
+	host/build/test pulp/build/oprecompkw/test/test
+
+.PHONY: clean
+
+clean:
+	$(MAKE) -C pulp clean
+	$(MAKE) -C host clean

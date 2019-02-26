@@ -24,6 +24,8 @@
 
 #include <stdio.h>
 
+#define DDR_SNIFFER_MAX_PATTERN_SIZE  64
+
 #define DEBUG_BUFF_DUMP
 #ifdef DEBUG_BUFF_DUMP
 static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_split)
@@ -39,7 +41,7 @@ static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_
       if (i != 0) {
         puts("");
       }
-      printf("%04x-%04x: ", i, i + 32);
+      printf("%04x-%04x: ", (unsigned int)i, (unsigned int)i + 32);
     }
     if (byte_split) {
       printf("%02x ", data[i]);
@@ -57,5 +59,31 @@ static inline void dump(uint8_t *data, size_t data_len, char *msg, uint8_t byte_
 {
 }
 #endif /* DEBUG_BUFF_DUMP */
+
+// Convert a pointer in host memory space to a PULP address that will be routed
+// to the host.
+// Notes:
+// - This function was considered useful, copied and adapted from another
+//   example to this file.
+// - Original function: host2local(uint64_t host)
+// - Original author: Fabian Schuiki <fschuiki@iis.ee.ethz.ch>
+static inline uint64_t htop(uint64_t hostaddr)
+{
+  return (hostaddr & (((uint64_t)1 << 48) - 1)) | ((uint64_t)1 << 48);
+}
+
+// Returns the length (number of bytes) of the string str, excluding the
+// terminating null byte ('\0').
+// Notes:
+// - This is a very simple/modest/nonoptimized implementation of strlen(3).
+static inline size_t bare_strlen(const char *str)
+{
+  size_t cnt = 0;
+  while (str[cnt] != '\0') {
+    cnt++;
+  }
+  return cnt;
+}
+
 #endif /* __UTILS_H_INCLUDED__ */
 

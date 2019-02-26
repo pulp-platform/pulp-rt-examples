@@ -1,3 +1,4 @@
 *~
 build/
 *.sw[p,o]
+cscope.*

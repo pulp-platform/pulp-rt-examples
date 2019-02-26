@@ -18,5 +18,13 @@
 # Author: Éder F. Zulian, TUK (zulian@eit.uni-kl.de)
 #
 
-include ../../oprecompkw-test.mk
+PULP_CFLAGS = -I $(TOPDIR)common
+
+# Configuration options can be specified here
+#CONFIG_OPT += gvsoc/trace=dma
+#CONFIG_OPT += gvsoc/trace=ddr
+#CONFIG_OPT += **/board/ddr/tlm/gem5-config=config.ini
+#CONFIG_OPT += **/board/ddr/tlm/dramsys-config=sim.xml
+
+include ../../../oprecompkw-test-pulp.mk
 
