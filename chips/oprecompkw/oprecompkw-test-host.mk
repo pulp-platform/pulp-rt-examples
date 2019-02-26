@@ -36,7 +36,7 @@ $(target): $(builddir) $(target).c
 $(builddir):
 	mkdir -p $(builddir)
 
-all: $(check_target) $(target)
+all: $(target)
 
 .PHONY: clean
 
