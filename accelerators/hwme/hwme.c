@@ -24,6 +24,11 @@
 #include "hal/hwme/hwme_v1.h"
 
 #define USE_STIMULI
+// comment below line to run only dot product with bias
+//#define DO_MATVEC_MULT
+#ifndef DO_MATVEC_MULT
+    #define DO_DOT_PROD
+#endif
 
 #include "hwme_stimuli_a.h"
 #include "hwme_stimuli_b.h"
@@ -38,6 +43,11 @@ int main() {
   uint32_t *d = (uint8_t *) 0x1c010600;
 
   int coreID = get_core_id();
+#ifdef DO_MATVEC_MULT
+  // define dimensions
+  uint32_t in_vec_len = 8;
+  uint32_t out_vec_len = 10;
+#endif
 
   volatile int errors = 0;
   int gold_sum = 0, check_sum = 0;
@@ -55,7 +65,11 @@ int main() {
       ((uint8_t *) b)[i] = stim_b[i];
     }
     for(int i=0; i<512; i++) {
+#ifdef DO_MATVEC_MULT
+      ((uint8_t *) c)[i] = 0; // no bias for matrix vector multiplication
+#else
       ((uint8_t *) c)[i] = stim_c[i];
+#endif
     }
     for(int i=0; i<512; i++) {
       ((uint8_t *) d)[i] = stim_d[i];
@@ -87,16 +101,24 @@ int main() {
     hwme_bytecode_set(HWME_BYTECODE3_OFFS,        0x00000000);
     hwme_bytecode_set(HWME_BYTECODE2_OFFS,        0x00000000);
     hwme_bytecode_set(HWME_BYTECODE1_OFFS,        0x000008cd);
-    hwme_bytecode_set(HWME_BYTECODE0_OFFS,        0x11a12c05);
+    hwme_bytecode_set(HWME_BYTECODE0_OFFS,        0x11a13c05);
     
     // job-dependent registers
     hwme_a_addr_set((unsigned int) a);
     hwme_b_addr_set((unsigned int) b);
     hwme_c_addr_set((unsigned int) c);
     hwme_d_addr_set((unsigned int) d);
+#ifdef DO_MATVEC_MULT
+    hwme_nb_iter_set(out_vec_len);
+    hwme_len_iter_set(in_vec_len-1);
+    hwme_vectstride_set(in_vec_len*4); // stride for the matrix is equal to in_vec length * wordsize
+    hwme_vectstride2_set(0); // stride for the vector is zero
+#else
     hwme_nb_iter_set(4);
     hwme_len_iter_set(32-1);
     hwme_vectstride_set(32*4);
+    hwme_vectstride2_set(32*4); // same stride for both streams
+#endif
     hwme_shift_simplemul_set(hwme_shift_simplemul_value(0, 0));
 
     // start HWME operation
@@ -115,10 +137,17 @@ int main() {
     if(d[2] != 0x000320b2) errors++;
     if(d[3] != 0x00061cb3) errors++;
 #else
-    if(d[0] != 0x7f228fd6) errors++;
-    if(d[1] != 0x23a7d5c2) errors++;
-    if(d[2] != 0x7f281848) errors++;
-    if(d[3] != 0x6127d834) errors++;
+    #ifdef DO_MATVEC_MULT
+        if(d[0] != 0x7CB12A38) errors++;
+        if(d[1] != 0xCD4F4DCB) errors++;
+        if(d[2] != 0x49CD5D5C) errors++;
+        if(d[3] != 0x2A1D8706) errors++;
+    #else
+        if(d[0] != 0x7f228fd6) errors++;
+        if(d[1] != 0x23a7d5c2) errors++;
+        if(d[2] != 0x7f281848) errors++;
+        if(d[3] != 0x6127d834) errors++;
+    #endif
 #endif /* USE_STIMULI */
 
     printf("errors=%d\n", errors);
