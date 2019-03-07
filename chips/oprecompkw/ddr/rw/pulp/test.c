@@ -65,7 +65,7 @@ int main(uint64_t wedptr)
 {
   int i;
   int id;
-	st_wed wed = {
+  st_wed wed = {
     ._offset = 0,
     .output = 0ULL
   };
@@ -87,10 +87,10 @@ int main(uint64_t wedptr)
   printf("Before loading\n");
   wed_dump(&wed);
 
-	printf("wedptr: 0x%08lX_%08lX\n", (uint32_t)(wedptr >> 32), (uint32_t)(wedptr));
+  printf("wedptr: 0x%08lX_%08lX\n", (uint32_t)(wedptr >> 32), (uint32_t)(wedptr));
   // Use DMA to copy work element descriptor (WED) from host
-	id = plp_dma_memcpy(htop(wedptr), (uint32_t)&wed, sizeof(wed), PLP_DMA_EXT2LOC);
-	plp_dma_wait(id);
+  id = plp_dma_memcpy(htop(wedptr), (uint32_t)&wed, sizeof(wed), PLP_DMA_EXT2LOC);
+  plp_dma_wait(id);
 
   // Dump WED contents
   printf("After loading\n");
@@ -101,7 +101,7 @@ int main(uint64_t wedptr)
 
   // Write into external memory: PLP_DMA_LOC2EXT
   id = plp_dma_memcpy(address, (uint32_t)buff, s, PLP_DMA_LOC2EXT);
-	plp_dma_wait(id);
+  plp_dma_wait(id);
 
   // Overwrite local buffer before reading back from external memory
   for (i = 0; i < BUFF_SIZE; i++) {
@@ -119,7 +119,7 @@ int main(uint64_t wedptr)
   dump((uint8_t *)buff, s, NULL, 0);
 
   id = plp_dma_memcpy(htop(wed.output), (uint32_t)&output, sizeof(output), PLP_DMA_LOC2EXT);
-	plp_dma_wait(id);
+  plp_dma_wait(id);
 
   return 0;
 }
