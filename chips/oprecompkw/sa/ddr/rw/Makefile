@@ -26,5 +26,9 @@ PULP_CFLAGS = -I $(TOPDIR)../common
 #CONFIG_OPT += **/board/ddr/tlm/gem5-config=config.ini
 #CONFIG_OPT += **/board/ddr/tlm/dramsys-config=sim.xml
 
+# This option can be used to prevent the inclusion of the default linker
+# script
+# CONFIG_OPT += rt/no-link-script=true
+
 include ../../oprecompkw_sa-test.mk
 
