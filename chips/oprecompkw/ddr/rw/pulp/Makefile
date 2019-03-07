@@ -28,7 +28,8 @@ PULP_CFLAGS = -I $(TOPDIR)common
 
 # This option can be used to prevent the inclusion of the default linker
 # script
-# CONFIG_OPT += rt/no-link-script=true
+CONFIG_OPT += rt/no-link-script=true
+PULP_LDFLAGS += -T$(TOPDIR)ddr/rw/pulp/link.ld
 
 include ../../../oprecompkw-test-pulp.mk
 
