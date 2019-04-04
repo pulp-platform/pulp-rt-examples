@@ -18,17 +18,5 @@
 # Author: Éder F. Zulian, TUK (zulian@eit.uni-kl.de)
 #
 
-PULP_CFLAGS = -I $(TOPDIR)common
-
-# Configuration options can be specified here
-#CONFIG_OPT += gvsoc/trace=dma
-#CONFIG_OPT += gvsoc/trace=ddr
-#CONFIG_OPT += **/board/ddr/tlm/gem5-config=config.ini
-#CONFIG_OPT += **/board/ddr/tlm/dramsys-config=sim.xml
-
-# This option can be used to prevent the inclusion of the default linker
-# script
-# CONFIG_OPT += rt/no-link-script=true
-
-include ../../../oprecompkw-test-pulp.mk
+include ../../../oprecompkw-test-host.mk
 
