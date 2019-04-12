@@ -34,6 +34,10 @@
 
 static int cores_events;
 
+// This tructure will hold the configuration and also the results in the
+// cumulative mode
+RT_L1_DATA static rt_perf_t perf[ARCHI_CLUSTER_NB_PE];
+
 
 // This benchmark is cumulating over several sequence of codes in the perf
 // structure so that after several execution, we have the values for all
@@ -77,10 +81,6 @@ static void display_events(void *arg)
 
 static void cluster_entry()
 {
-  // This tructure will hold the configuration and also the results in the
-  // cumulative mode
-  rt_perf_t perf[rt_nb_pe()];
-
   // It must be initiliazed at least once, this will set all values in the
   // structure to zero.
   for (int i=0; i<rt_nb_pe(); i++)
@@ -107,7 +107,7 @@ static void cluster_entry()
   do_bench_1(perf, (1<<RT_PERF_LD_EXT_CYC));
   do_bench_1(perf, (1<<RT_PERF_ST_EXT_CYC));
   do_bench_1(perf, (1<<RT_PERF_TCDM_CONT));
-  do_bench_1(perf, (1<<RT_PERF_CSR_HAZARD));
+  //do_bench_1(perf, (1<<RT_PERF_CSR_HAZARD));
 
   // All cores have filled their own performance structure, thus just display an average
   printf("Total cycles: %d\n", rt_perf_get_average(perf, RT_PERF_CYCLES, rt_nb_pe()));
@@ -127,7 +127,7 @@ static void cluster_entry()
   printf("External load stall cycles: %d\n", rt_perf_get_average(perf, RT_PERF_LD_EXT_CYC, rt_nb_pe()));
   printf("External store stall cycles: %d\n", rt_perf_get_average(perf, RT_PERF_ST_EXT_CYC, rt_nb_pe()));
   printf("TCDM contention cycles: %d\n", rt_perf_get_average(perf, RT_PERF_TCDM_CONT, rt_nb_pe()));
-  printf("CSR hazards: %d\n", rt_perf_get_average(perf, RT_PERF_CSR_HAZARD, rt_nb_pe()));
+  //printf("CSR hazards: %d\n", rt_perf_get_average(perf, RT_PERF_CSR_HAZARD, rt_nb_pe()));
 }
 
 int main()

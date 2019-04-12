@@ -86,7 +86,7 @@ int main()
   do_bench_1(&perf, (1<<RT_PERF_LD_EXT_CYC));
   do_bench_1(&perf, (1<<RT_PERF_ST_EXT_CYC));
   do_bench_1(&perf, (1<<RT_PERF_TCDM_CONT));
-  do_bench_1(&perf, (1<<RT_PERF_CSR_HAZARD));
+  //do_bench_1(&perf, (1<<RT_PERF_CSR_HAZARD));
 
   printf("Total cycles: %d\n", rt_perf_get(&perf, RT_PERF_CYCLES));
   printf("Instructions: %d\n", rt_perf_get(&perf, RT_PERF_INSTR));
@@ -105,7 +105,7 @@ int main()
   printf("External load stall cycles: %d\n", rt_perf_get(&perf, RT_PERF_LD_EXT_CYC));
   printf("External store stall cycles: %d\n", rt_perf_get(&perf, RT_PERF_ST_EXT_CYC));
   printf("TCDM contention cycles: %d\n", rt_perf_get(&perf, RT_PERF_TCDM_CONT));
-  printf("CSR hazards: %d\n", rt_perf_get(&perf, RT_PERF_CSR_HAZARD));
+  //printf("CSR hazards: %d\n", rt_perf_get(&perf, RT_PERF_CSR_HAZARD));
 
 
   return 0;
