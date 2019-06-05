@@ -42,10 +42,11 @@ int main()
   rt_cam_control(camera, CMD_INIT, 0);
 
   rt_event_t *event1 = rt_event_get_blocking(NULL);
-  rt_cam_control(camera, CMD_START, 0);
 
   rt_camera_capture (camera, buff[0], WIDTH*HEIGHT, event1);
   
+  rt_cam_control(camera, CMD_START, 0);
+
   rt_event_wait(event1);
   rt_cam_control(camera, CMD_STOP, 0);
 
