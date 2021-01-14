@@ -93,7 +93,7 @@ int main()
 	  }
   }  
 
-  printf("Enjoy!!! The test work!\n");
+  printf("Enjoy!!! The test works!\n");
 
   return 0;
 }
